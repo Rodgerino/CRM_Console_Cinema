@@ -5,13 +5,11 @@ public class Seat {
     private int id;
     private int row;
     private int seatNum;
-    private boolean isBooked;
 
-    public Seat(int id, int row, int seatNum, boolean isBooked) {
+    public Seat(int id, int row, int seatNum) {
         this.id = id;
         this.row = row;
         this.seatNum = seatNum;
-        this.isBooked = isBooked;
     }
 
     public int getId() {
@@ -26,9 +24,6 @@ public class Seat {
         return seatNum;
     }
 
-    public boolean isBooked() {
-        return isBooked;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -42,9 +37,6 @@ public class Seat {
         this.seatNum = seatNum;
     }
 
-    public void setBooked(boolean booked) {
-        isBooked = booked;
-    }
 
     @Override
     public String toString() {
@@ -52,7 +44,6 @@ public class Seat {
                 "id = " + id +
                 ", row = " + row +
                 ", seatNum = " + seatNum +
-                ", isBooked = " + isBooked +
                 '}';
     }
 }

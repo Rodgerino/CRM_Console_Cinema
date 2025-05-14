@@ -7,14 +7,14 @@ import java.sql.SQLException;
 public class createTabelsStarter {
 
     public static void main(String[] args) {
-
+        createBookingsTabel();
     }
 
     private static void createSeatTabel(){
 
         String sql = """
                 CREATE TABLE seats(
-                    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id          SERIAL PRIMARY KEY ,
                     row         INTEGER NOT NULL,
                     seat_num    INTEGER NOT NULL
                 );
@@ -37,13 +37,13 @@ public class createTabelsStarter {
 
         String sql = """
                 CREATE TABLE bookings(
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id              SERIAL PRIMARY KEY,
                     seat_id         INTEGER NOT NULL,
                     session_id      INTEGER NOT NULL,
                     user_name       VARCHAR(100) NOT NULL,
                     booking_time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (seat_id) REFERENCES seats("id"),
-                    FOREIGN KEY (session_id) REFERENCES sessions("id")
+                    FOREIGN KEY (session_id) REFERENCES session("id")
                 );
                 """;
 
@@ -65,7 +65,7 @@ public class createTabelsStarter {
 
         String sql = """
                 CREATE TABLE session(
-                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id              SERIAL PRIMARY KEY ,
                     session_name    VARCHAR(100) NOT NULL,
                     session_time    TIMESTAMP NOT NULL,
                     hall_id         INTEGER NOT NULL
