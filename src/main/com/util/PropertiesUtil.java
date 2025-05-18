@@ -6,15 +6,16 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
+    private static final Properties PROPERTIES = new Properties();
+
     static {
         loadProperties();
     }
 
-    private static final Properties PROPERTIES = new Properties();
 
     private static void loadProperties(){
 
-        try(InputStream is = PropertiesUtil.class.getResourceAsStream("application.properties")){
+        try(InputStream is = PropertiesUtil.class.getClassLoader().getResourceAsStream("application.properties")){
 
         PROPERTIES.load(is);
 

@@ -15,6 +15,9 @@ public class Session {
         this.hallId = hallId;
     }
 
+    public Session(Session session) {
+    }
+
     public int getId() {
         return id;
     }
