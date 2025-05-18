@@ -21,11 +21,11 @@ public class ConsoleUI {
     private final Scanner sc;
     private Object LocalDateTime;
 
-    public ConsoleUI(SeatDAO seatDAO, SessionDAO sessionDAO, BookingDAO bookingDAO, Scanner sc) {
+    public ConsoleUI(SeatDAO seatDAO, SessionDAO sessionDAO, BookingDAO bookingDAO) {
         this.seatDAO = seatDAO;
         this.sessionDAO = sessionDAO;
         this.bookingDAO = bookingDAO;
-        this.sc = sc;
+        this.sc = new Scanner(System.in);
     }
 
 

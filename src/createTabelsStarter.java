@@ -7,7 +7,9 @@ import java.sql.SQLException;
 public class createTabelsStarter {
 
     public static void main(String[] args) {
-        createBookingsTabel();
+       createSeatTabel();
+       createSessionTabel();
+       createBookingsTabel();
     }
 
     private static void createSeatTabel(){

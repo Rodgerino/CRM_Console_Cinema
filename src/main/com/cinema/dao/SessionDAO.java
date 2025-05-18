@@ -76,7 +76,7 @@ public class SessionDAO {
 
 
 
-    private SessionDAO(){
+    public SessionDAO(){
     }
 
 }

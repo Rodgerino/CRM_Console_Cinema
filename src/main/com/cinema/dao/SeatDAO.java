@@ -62,7 +62,7 @@ public class SeatDAO {
 
 
 
-    private SeatDAO(){
+    public SeatDAO(){
     }
 
 }

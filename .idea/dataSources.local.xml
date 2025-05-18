@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-251.25410.129">
-    <data-source name="postgres@localhost" uuid="6278e422-28a6-4fb6-a369-e05fa41a3dd2">
+    <data-source name="postgres@localhost" uuid="28c9a513-b7fe-43df-a6e2-1bb78de6ecff">
       <database-info product="PostgreSQL" version="17.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="17.4" exact-driver-version="42.7">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
@@ -10,16 +10,8 @@
       <user-name>postgres</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node negative="1">
-            <node kind="database" qname="@">
-              <node kind="schema" qname="@" />
-            </node>
-            <node kind="database" qname="cinema">
-              <node kind="schema" qname="cinematabels" />
-            </node>
-            <node kind="database" qname="postgres">
-              <node kind="schema" qname="cinema" />
-            </node>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
           </node>
         </introspection-scope>
       </schema-mapping>
