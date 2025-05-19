@@ -1,7 +1,7 @@
-package main.com.cinema.dao;
+package com.cinema.dao;
 
-import main.com.cinema.entity.Booking;
-import main.com.util.ConnectionManager;
+import com.cinema.entity.Booking;
+import com.util.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,13 +10,13 @@ import java.util.List;
 public class BookingDAO {
 
     private static final String SQL_CREATE_BOOKING = """
-            INSERT INTO bookings (seat_id,session_id,user_name,booking_time)
-            VALUES (?,?,?,?)
+            INSERT INTO bookings (seat_id,session_id,user_name)
+            VALUES (?,?,?)
             """;
 
     private static final String SQL_DELETE_BOOKING = """
             DELETE FROM bookings
-            WHER id =  ? AND session_id = ?
+            WHERE id = ?
             """;
 
     private static final String SQL_GET_ALL_BOOKINGS = """
@@ -48,24 +48,20 @@ public class BookingDAO {
         return bookings;
     }
 
-    public void deleteBooking(int bookingId, int sessionId) throws SQLException {
+    public void deleteBooking(int bookingId) throws SQLException {
         try (Connection con = ConnectionManager.open();
              PreparedStatement prSt = con.prepareStatement(SQL_DELETE_BOOKING)) {
             prSt.setInt(1, bookingId);
-            prSt.setInt(2,sessionId);
             prSt.executeUpdate();
         }
     }
 
-    public void createBooking(int seatId, int sessionId, String userName, Timestamp bookingTime) throws SQLException {
+    public void createBooking(int seatId, int sessionId, String userName) throws SQLException {
         try (Connection con = ConnectionManager.open();
              PreparedStatement prSt = con.prepareStatement(SQL_CREATE_BOOKING)) {
             prSt.setInt(1, seatId);
             prSt.setInt(2, sessionId);
             prSt.setString(3, userName);
-            prSt.setTimestamp(4, bookingTime);
-
-
             prSt.executeUpdate();
         }
 

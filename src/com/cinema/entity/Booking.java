@@ -1,4 +1,4 @@
-package main.com.cinema.entity;
+package com.cinema.entity;
 
 import java.sql.Timestamp;
 
@@ -15,6 +15,7 @@ public class Booking {
         this.userName = userName;
         this.sessionId = sessionId;
     }
+
 
     public int getId() {
         return id;
@@ -50,11 +51,9 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking{" +
-                "id = " + id +
-                ", seatId = " + seatId +
-                ", userName = '" + userName + '\'' +
-                ", sessionId = " + sessionId +
-                '}';
+        return "id: " + id +
+                ", Номер места: " + seatId +
+                ", Бронь на имя: '" + userName + '\'' +
+                ", ID Сеанса: " + sessionId;
     }
 }

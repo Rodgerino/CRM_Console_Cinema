@@ -1,7 +1,7 @@
-package main.com.cinema.dao;
+package com.cinema.dao;
 
-import main.com.cinema.entity.Session;
-import main.com.util.ConnectionManager;
+import com.cinema.entity.Session;
+import com.util.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,8 +33,10 @@ public class SessionDAO {
 
                 while(rs.next()){
                     sessions.add( new Session(
-                            sessionConstructor(rs)
-                    ));
+                            rs.getInt("id"),
+                            rs.getString("session_name"),
+                            rs.getTimestamp("session_time"),
+                            rs.getInt("hall_id")));
                 }
 
         }
@@ -52,25 +54,16 @@ public class SessionDAO {
             try(ResultSet rs = prSt.executeQuery()){
                 if(rs.next()){
                     return new Session(
-                            sessionConstructor(rs)
-                    );
+                            rs.getInt("id"),
+                            rs.getString("session_name"),
+                            rs.getTimestamp("session_time"),
+                            rs.getInt("hall_id"));
                 }
             }
 
         }
 
         return null;
-    }
-
-
-
-
-    public Session sessionConstructor(ResultSet rs) throws SQLException {
-        return new Session(
-                rs.getInt("id"),
-                rs.getString("session_name"),
-                rs.getTimestamp("session_time"),
-                rs.getInt("hall_id"));
     }
 
 

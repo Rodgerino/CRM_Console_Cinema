@@ -1,7 +1,7 @@
-package main.com.cinema.dao;
+package com.cinema.dao;
 
-import main.com.cinema.entity.Seat;
-import main.com.util.ConnectionManager;
+import com.cinema.entity.Seat;
+import com.util.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;

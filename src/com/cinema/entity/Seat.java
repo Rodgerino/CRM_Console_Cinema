@@ -1,4 +1,4 @@
-package main.com.cinema.entity;
+package com.cinema.entity;
 
 public class Seat {
 
@@ -40,10 +40,8 @@ public class Seat {
 
     @Override
     public String toString() {
-        return "Seat{" +
-                "id = " + id +
-                ", row = " + row +
-                ", seatNum = " + seatNum +
-                '}';
+        return "id: " + id +
+                ", Ряд: " + row +
+                ", Номер места: " + seatNum;
     }
 }

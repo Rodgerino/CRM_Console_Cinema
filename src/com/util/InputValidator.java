@@ -1,4 +1,4 @@
-package main.com.util;
+package com.util;
 
 public class InputValidator {
 

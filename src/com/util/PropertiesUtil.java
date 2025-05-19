@@ -1,4 +1,4 @@
-package main.com.util;
+package com.util;
 
 import java.io.IOException;
 import java.io.InputStream;

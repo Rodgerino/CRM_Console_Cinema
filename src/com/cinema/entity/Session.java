@@ -1,4 +1,4 @@
-package main.com.cinema.entity;
+package com.cinema.entity;
 
 import java.sql.Timestamp;
 
@@ -52,11 +52,9 @@ public class Session {
 
     @Override
     public String toString() {
-        return "Session{" +
-                "id = " + id +
-                ", nameSession = '" + nameSession + '\'' +
-                ", sessionTime = " + sessionTime +
-                ", hallId = " + hallId +
-                '}';
+        return  "id: " + id +
+                ", Название сеанса: '" + nameSession + '\'' +
+                ", Дата и время сеанса: " + sessionTime +
+                ", IDЗала: " + hallId;
     }
 }

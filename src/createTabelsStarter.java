@@ -1,4 +1,4 @@
-import main.com.util.ConnectionManager;
+import com.util.ConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

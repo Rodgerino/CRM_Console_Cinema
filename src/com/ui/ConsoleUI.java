@@ -1,13 +1,14 @@
-package main.com.ui;
+package com.ui;
 
-import main.com.cinema.dao.BookingDAO;
-import main.com.cinema.dao.SeatDAO;
-import main.com.cinema.dao.SessionDAO;
-import main.com.cinema.entity.Booking;
-import main.com.cinema.entity.Seat;
-import main.com.cinema.entity.Session;
-import main.com.util.InputValidator;
+import com.cinema.dao.BookingDAO;
+import com.cinema.dao.SeatDAO;
+import com.cinema.dao.SessionDAO;
+import com.cinema.entity.Booking;
+import com.cinema.entity.Seat;
+import com.cinema.entity.Session;
+import com.util.InputValidator;
 
+import java.awt.print.Book;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ConsoleUI {
 
             switch (choice) {
                 case 1 -> displaySessions();
-                case 2 -> displaySeatsForShow();
+                case 2 -> displaySeatsForSession();
                 case 3 -> bookSeat();
                 case 4 -> canelBooking();
                 case 5 -> displayBookings();
@@ -66,7 +67,7 @@ public class ConsoleUI {
         }
     }
 
-    private void displaySeatsForShow(){
+    private void displaySeatsForSession(){
         try{
             System.out.println("Введите ID сеанса: ");
              int sessionId = sc.nextInt();
@@ -80,8 +81,8 @@ public class ConsoleUI {
 
              List<Seat> seats = seatDAO.getAllSeats();
              System.out.println("Схема зала для сеанса: " + session.getNameSession());
-            for (int row = 1; row < 5 ; row++) {
-                System.out.println("Ряд " + row + ": ");
+            for (int row = 1; row <= 5 ; row++) {
+                System.out.print("Ряд " + row + ": ");
                 for (int seatNum = 1; seatNum < 10; seatNum++) {
                     boolean booked = false;
                     for (Seat seat : seats) {
@@ -90,7 +91,7 @@ public class ConsoleUI {
                             break;
                         }
                     }
-                    System.out.println(booked ? "X " : "0 ");
+                    System.out.print(booked ? "X " : "0 ");
                 }
                 System.out.println();
             }
@@ -124,7 +125,7 @@ public class ConsoleUI {
             System.out.println("Введите ваше имя: ");
             String userName = sc.nextLine();
 
-            if(!InputValidator.isValidName(userName) ){
+            if(InputValidator.isValidName(userName) ){
                 System.out.println("Неккоректное имя!");
                 return;
             }
@@ -148,7 +149,7 @@ public class ConsoleUI {
                 return;
             }
 
-            bookingDAO.createBooking(seatId,sessionId,userName, (Timestamp) LocalDateTime);
+            bookingDAO.createBooking(seatId,sessionId,userName);
             System.out.println("Место успешно забронировано!");
 
         }catch (SQLException e) {
@@ -158,36 +159,31 @@ public class ConsoleUI {
 
     private void canelBooking(){
         try{
-            System.out.println("Введите ID сеанса: ");
-            int sessionId = sc.nextInt();
-            sc.nextLine();
-
-            if(sessionDAO.getSessionById(sessionId) == null){
-                System.out.println("Сеанс не найден!");
-                return;
-            }
 
             System.out.println("Введите ID брони: ");
             int bookingId = sc.nextInt();
-
-            if(bookingDAO.getBookingById(bookingId) == null ){
-                System.out.println("Бронь не найдена!");
-                return;
-            }
+            sc.nextLine();
 
 
-            bookingDAO.deleteBooking(bookingId,sessionId);
+
+            bookingDAO.deleteBooking(bookingId);
             System.out.println("Бронь успешно снята!");
 
 
         }catch (SQLException e) {
-            System.out.println("Ошибка при отмене бронирования места сеанса" + e.getMessage());
+            System.out.println("Ошибка при отмене бронирования места сеанса " + e.getMessage());
         }
     }
 
     private void displayBookings(){
         try{
+
             List<Booking> bookings = bookingDAO.getAllBookings();
+
+            if (bookings.isEmpty()){
+                System.out.println("Нет доступных броней для просмотра");
+            }
+
             for (Booking booking : bookings) {
                 System.out.println(booking);
             }
