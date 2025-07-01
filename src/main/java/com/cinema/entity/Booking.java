@@ -1,7 +1,18 @@
 package com.cinema.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
 import java.sql.Timestamp;
 
+@Data
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
 
     private int id;
@@ -9,45 +20,7 @@ public class Booking {
     private String userName;
     private int sessionId;
 
-    public Booking(int id, int seatId, String userName, int sessionId) {
-        this.id = id;
-        this.seatId = seatId;
-        this.userName = userName;
-        this.sessionId = sessionId;
-    }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public int getSeatId() {
-        return seatId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public int getSessionId() {
-        return sessionId;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setSessionId(int sessionId) {
-        this.sessionId = sessionId;
-    }
 
     @Override
     public String toString() {

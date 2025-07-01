@@ -1,7 +1,7 @@
 package com.cinema.dao;
 
 import com.cinema.entity.Booking;
-import com.util.ConnectionManager;
+import com.cinema.util.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;

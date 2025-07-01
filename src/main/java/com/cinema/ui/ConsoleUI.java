@@ -1,4 +1,4 @@
-package com.ui;
+package com.cinema.ui;
 
 import com.cinema.dao.BookingDAO;
 import com.cinema.dao.SeatDAO;
@@ -6,11 +6,9 @@ import com.cinema.dao.SessionDAO;
 import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
 import com.cinema.entity.Session;
-import com.util.InputValidator;
+import com.cinema.util.InputValidator;
 
-import java.awt.print.Book;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Scanner;
 
