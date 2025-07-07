@@ -12,6 +12,10 @@
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
 
+    <mapping class = "com.cinema.entity.Booking"/>
+    <mapping class = "com.cinema.entity.Seat"/>
+    <mapping class = "com.cinema.entity.Session"/>
+
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

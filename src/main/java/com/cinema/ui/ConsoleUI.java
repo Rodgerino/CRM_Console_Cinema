@@ -6,7 +6,10 @@ import com.cinema.dao.SessionDAO;
 import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
 import com.cinema.entity.Session;
+import com.cinema.util.HibernateUtil;
 import com.cinema.util.InputValidator;
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -174,19 +177,15 @@ public class ConsoleUI {
     }
 
     private void displayBookings(){
-        try{
 
-            List<Booking> bookings = bookingDAO.getAllBookings();
+        List<Booking> bookings = bookingDAO.getAllBookings();
 
-            if (bookings.isEmpty()){
-                System.out.println("Нет доступных броней для просмотра");
-            }
+        if (bookings.isEmpty()){
+            System.out.println("Нет доступных броней для просмотра");
+        }
 
-            for (Booking booking : bookings) {
-                System.out.println(booking);
-            }
-        } catch (SQLException e) {
-            System.out.println("Ошибка при загрузке сеанса" + e.getMessage());
+        for (Booking booking : bookings) {
+            System.out.println(booking);
         }
     }
 }

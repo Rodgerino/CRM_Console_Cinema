@@ -1,93 +1,81 @@
 package com.cinema.dao;
 
 import com.cinema.entity.Booking;
+import com.cinema.entity.Seat;
 import com.cinema.util.ConnectionManager;
+import com.cinema.util.HibernateUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class BookingDAO {
 
-    private static final String SQL_CREATE_BOOKING = """
-            INSERT INTO bookings (seat_id,session_id,user_name)
-            VALUES (?,?,?)
-            """;
+    public List<Booking> getAllBookings() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
 
-    private static final String SQL_DELETE_BOOKING = """
-            DELETE FROM bookings
-            WHERE id = ?
-            """;
+            String hql = "FROM Booking";
+            Query<Booking> query = session.createQuery(hql, Booking.class);
+            return query.getResultList();
 
-    private static final String SQL_GET_ALL_BOOKINGS = """
-            SELECT *
-            FROM bookings
-            """;
-    private static final String SQL_GET_BOOKING_BY_ID = """
-            SELECT *
-            FROM bookings
-            WHERE id = ?
-            """;
+        } catch (Exception e) {
 
-    public List<Booking> getAllBookings() throws SQLException {
-        List<Booking> bookings = new ArrayList<>();
-
-        try(Connection con = ConnectionManager.open();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_GET_ALL_BOOKINGS)){
-
-            while(rs.next()){
-                bookings.add(new Booking(
-                        rs.getInt("id"),
-                        rs.getInt("seat_id"),
-                        rs.getString("user_name"),
-                        rs.getInt("session_id")
-                ));
-            }
+            throw new RuntimeException("Failed to get all bookings", e);
         }
-        return bookings;
+
     }
 
     public void deleteBooking(int bookingId) throws SQLException {
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement prSt = con.prepareStatement(SQL_DELETE_BOOKING)) {
-            prSt.setInt(1, bookingId);
-            prSt.executeUpdate();
+
+        try(SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+            Session session = sessionFactory.openSession()){
+
+            session.beginTransaction();
+
+            Booking booking = session.get(Booking.class,bookingId);
+
+            session.delete(booking);
+
+            session.getTransaction().commit();
+
         }
     }
 
     public void createBooking(int seatId, int sessionId, String userName) throws SQLException {
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement prSt = con.prepareStatement(SQL_CREATE_BOOKING)) {
-            prSt.setInt(1, seatId);
-            prSt.setInt(2, sessionId);
-            prSt.setString(3, userName);
-            prSt.executeUpdate();
+        try(SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+            Session session = sessionFactory.openSession()){
+
+            session.beginTransaction();
+
+            Booking booking = Booking.builder()
+                    .seat(session.get(Seat.class, seatId))
+                    .session(session.get(com.cinema.entity.Session.class,sessionId))
+                    .userName(userName)
+                    .build();
+
+            session.saveOrUpdate(booking);
+
+            session.getTransaction().commit();
+
         }
 
     }
 
     public Booking getBookingById (int bookingId) throws SQLException {
 
-        try (Connection con = ConnectionManager.open();
-             PreparedStatement prSt = con.prepareStatement(SQL_GET_BOOKING_BY_ID)) {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
 
-            prSt.setInt(1, bookingId);
+            return session.get(Booking.class, bookingId);
 
-            try (ResultSet rs = prSt.executeQuery()) {
-                if (rs.next()) {
-                    return new Booking(
-                            rs.getInt("id"),
-                            rs.getInt("seat_id"),
-                            rs.getString("userName"),
-                            rs.getInt("session_id")
-                    );
-                }
-            }
-
+        }catch (Exception e){
+            throw new RuntimeException("Failed to get booking by id", e);
         }
-
-        return null;
-
     }
 }

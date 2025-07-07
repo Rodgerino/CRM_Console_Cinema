@@ -1,4 +1,4 @@
-import com.util.ConnectionManager;
+import com.cinema.util.ConnectionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

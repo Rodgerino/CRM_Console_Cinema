@@ -1,18 +1,18 @@
 package com.cinema.dao;
 
+import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
 import com.cinema.util.ConnectionManager;
+import com.cinema.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SeatDAO {
-
-    private static final String SQL_GET_ALL_SEATS = """
-            SELECT *
-            FROM seats
-            """;
 
     private static final String SQL_IS_SEAT_BOOKED = """
             SELECT COUNT(*)
@@ -21,27 +21,23 @@ public class SeatDAO {
             """;
 
 
-    public List<Seat> getAllSeats() throws SQLException {
-        List<Seat> seats = new ArrayList<>();
+    public List<Seat> getAllSeats() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
 
-        try(Connection con = ConnectionManager.open();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_GET_ALL_SEATS)){
+            String hql = "FROM Seat";
+            Query<Seat> query = session.createQuery(hql, Seat.class);
+            return query.getResultList();
 
-            while(rs.next()) {
-                seats.add(new Seat(
-                        rs.getInt("id"),
-                        rs.getInt("row"),
-                        rs.getInt("seat_num")
-                ));
+        } catch (Exception e) {
 
-            }
-
+            throw new RuntimeException("Failed to get all bookings", e);
         }
 
-        return seats;
     }
 
+
+    //TODO нужно переписать метод на хибер
     public boolean isSeatBooked(int seatId, int sessionId) throws SQLException {
 
         try(Connection con = ConnectionManager.open();

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
@@ -13,10 +13,19 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "session")
 public class Session {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "session_name")
     private String nameSession;
+
+    @Column(name  = "session_time")
     private Timestamp sessionTime;
+
+    @Column(name = "hall_id")
     private int hallId;
 
     @Override

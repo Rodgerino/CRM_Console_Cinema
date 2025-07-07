@@ -1,7 +1,11 @@
 package com.cinema.dao;
 
+import com.cinema.entity.Booking;
 import com.cinema.entity.Session;
 import com.cinema.util.ConnectionManager;
+import com.cinema.util.HibernateUtil;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,64 +13,32 @@ import java.util.List;
 
 public class SessionDAO {
 
-    private static final String SQL_GET_ALL_SESSIONS = """
-            SELECT *
-            FROM session
-            """;
-
-    private static final String SQL_GET_SESSION_BY_ID = """
-            SELECT *
-            FROM session
-            WHERE id = ?
-            """;
-
-
-
     public List<Session> getAllSessions() throws SQLException {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             org.hibernate.Session session = sessionFactory.openSession()) {
 
-        List<Session> sessions = new ArrayList<>();
+            String hql = "FROM Session";
+            Query<Session> query = session.createQuery(hql, Session.class);
+            return query.getResultList();
 
-        try(Connection con = ConnectionManager.open();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(SQL_GET_ALL_SESSIONS)){
+        } catch (Exception e) {
 
-
-                while(rs.next()){
-                    sessions.add( new Session(
-                            rs.getInt("id"),
-                            rs.getString("session_name"),
-                            rs.getTimestamp("session_time"),
-                            rs.getInt("hall_id")));
-                }
-
+            throw new RuntimeException("Failed to get all bookings", e);
         }
 
-        return sessions;
     }
 
-    public Session getSessionById(int id) throws SQLException{
+    public Session getSessionById (int sessionId) throws SQLException {
 
-        try(Connection con = ConnectionManager.open();
-            PreparedStatement prSt = con.prepareStatement(SQL_GET_SESSION_BY_ID)){
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             org.hibernate.Session session = sessionFactory.openSession()) {
 
-            prSt.setInt(1,id);
+            return session.get(Session.class, sessionId);
 
-            try(ResultSet rs = prSt.executeQuery()){
-                if(rs.next()){
-                    return new Session(
-                            rs.getInt("id"),
-                            rs.getString("session_name"),
-                            rs.getTimestamp("session_time"),
-                            rs.getInt("hall_id"));
-                }
-            }
-
+        }catch (Exception e){
+            throw new RuntimeException("Failed to get session by id", e);
         }
-
-        return null;
     }
-
-
 
 
     public SessionDAO(){

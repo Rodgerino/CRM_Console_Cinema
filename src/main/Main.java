@@ -4,9 +4,9 @@ package com.cinema.main;
 import com.cinema.dao.BookingDAO;
 import com.cinema.dao.SeatDAO;
 import com.cinema.dao.SessionDAO;
-import com.ui.ConsoleUI;
+import com.cinema.ui.ConsoleUI;
 
-public class Main {
+public class  Main {
     public static void main(String[] args) {
 
 
