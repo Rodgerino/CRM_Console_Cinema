@@ -5,6 +5,7 @@ import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
 import com.cinema.util.ConnectionManager;
 import com.cinema.util.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+
 public class BookingDAOTest {
+
+    private static final Logger log = Logger.getLogger(BookingDAOTest.class);
 
     @Test
     void getAllBookings() {
@@ -23,11 +27,11 @@ public class BookingDAOTest {
 
             session.beginTransaction();
 
-            String hql = "FROM Booking";
-            session.createQuery(hql, Booking.class);
+            session.createQuery("from Booking ", Booking.class);
 
             session.getTransaction().commit();
 
+            log.info("Getting all bookings");
 
         }
 

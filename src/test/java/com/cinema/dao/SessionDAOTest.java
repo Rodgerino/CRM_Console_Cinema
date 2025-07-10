@@ -29,8 +29,7 @@ public class SessionDAOTest {
 
             session.beginTransaction();
 
-            String hql = "FROM Session";
-            session.createQuery(hql, com.cinema.entity.Session.class);
+            session.createQuery("from Session ", com.cinema.entity.Session.class);
 
             session.getTransaction().commit();
 

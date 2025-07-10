@@ -8,6 +8,7 @@ import com.cinema.entity.Seat;
 import com.cinema.entity.Session;
 import com.cinema.util.HibernateUtil;
 import com.cinema.util.InputValidator;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 
@@ -17,6 +18,7 @@ import java.util.Scanner;
 
 public class ConsoleUI {
 
+    private static final Logger log = Logger.getLogger(ConsoleUI.class);
     private final SeatDAO seatDAO;
     private final SessionDAO sessionDAO;
     private final BookingDAO bookingDAO;
@@ -44,6 +46,8 @@ public class ConsoleUI {
             int choice = sc.nextInt();
             sc.nextLine();
 
+            log.info("Открылось контекстное меню");
+
             switch (choice) {
                 case 1 -> displaySessions();
                 case 2 -> displaySeatsForSession();
@@ -63,7 +67,9 @@ public class ConsoleUI {
             for (Session session : sessions) {
                 System.out.println(session);
             }
+            log.info("Список сеансов выведен");
         } catch (SQLException e) {
+            log.error(e.getMessage());
             System.out.println("Ошибка при загрузке сеанса" + e.getMessage());
         }
     }
@@ -74,6 +80,7 @@ public class ConsoleUI {
              int sessionId = sc.nextInt();
              sc.nextLine();
              Session session = sessionDAO.getSessionById(sessionId);
+             log.info("Поиск данных сеанса");
 
              if(session == null){
                  System.out.println("Сеанс не найден!");
@@ -94,9 +101,11 @@ public class ConsoleUI {
                     }
                     System.out.print(booked ? "X " : "0 ");
                 }
+                log.info("Данные сеанса получены");
                 System.out.println();
             }
         } catch (SQLException e) {
+            log.error(e.getMessage());
             System.out.println("Ошибка при загрузке мест сеанса" + e.getMessage());
         }
     }
@@ -120,6 +129,7 @@ public class ConsoleUI {
 
             if(!InputValidator.isValidRow(row) || !InputValidator.isValidSeatNum(seatNum)) {
                 System.out.println("Некорректный ряд или место!");
+                log.error("Ошибка - некорректный ряд или место!");
                 return;
             }
 
@@ -128,6 +138,7 @@ public class ConsoleUI {
 
             if(InputValidator.isValidName(userName) ){
                 System.out.println("Неккоректное имя!");
+                log.error("Ошибка - некорректное имя!");
                 return;
             }
 
@@ -142,18 +153,22 @@ public class ConsoleUI {
 
             if(seatId == -1){
                 System.out.println("Место не найдено!");
+                log.error("Ошибка - не найдено место!");
                 return;
             }
 
             if(seatDAO.isSeatBooked(seatId,sessionId)){
                 System.out.println("Место уже забронировано!");
+                log.error("Ошибка - место уже забронировано!");
                 return;
             }
 
             bookingDAO.createBooking(seatId,sessionId,userName);
             System.out.println("Место успешно забронировано!");
+            log.info("Место успешно забронировано");
 
         }catch (SQLException e) {
+            log.error(e.getMessage());
             System.out.println("Ошибка при бронировании мест сеанса" + e.getMessage());
         }
     }
@@ -169,9 +184,11 @@ public class ConsoleUI {
 
             bookingDAO.deleteBooking(bookingId);
             System.out.println("Бронь успешно снята!");
+            log.info("Бронь снята");
 
 
         }catch (SQLException e) {
+            log.error(e.getMessage());
             System.out.println("Ошибка при отмене бронирования места сеанса " + e.getMessage());
         }
     }
@@ -182,10 +199,13 @@ public class ConsoleUI {
 
         if (bookings.isEmpty()){
             System.out.println("Нет доступных броней для просмотра");
+            log.error("Нет доступных броней для просмотра");
         }
 
         for (Booking booking : bookings) {
             System.out.println(booking);
         }
+
+        log.info("Бронирования выведены");
     }
 }

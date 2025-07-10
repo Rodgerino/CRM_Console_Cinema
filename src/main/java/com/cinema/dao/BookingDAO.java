@@ -2,31 +2,37 @@ package com.cinema.dao;
 
 import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
-import com.cinema.util.ConnectionManager;
 import com.cinema.util.HibernateUtil;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
+
 public class BookingDAO {
+
+
+    private static final Logger log = Logger.getLogger(BookingDAO.class);
 
     public List<Booking> getAllBookings() {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
 
-            String hql = "FROM Booking";
-            Query<Booking> query = session.createQuery(hql, Booking.class);
-            return query.getResultList();
+            log.info("Получены все брони");
+
+            return session.createQuery("FROM Booking", Booking.class)
+                    .getResultList();
+
+
 
         } catch (Exception e) {
 
-            throw new RuntimeException("Failed to get all bookings", e);
+            log.error("Ошибка при получении броней",e);
+            throw new RuntimeException("Ошибка при получении броней", e);
         }
 
     }
@@ -42,7 +48,10 @@ public class BookingDAO {
 
             session.delete(booking);
 
+            log.info("Бронирование удалено");
+
             session.getTransaction().commit();
+
 
         }
     }
@@ -59,9 +68,13 @@ public class BookingDAO {
                     .userName(userName)
                     .build();
 
+            log.info("Бронирование создано");
+
             session.saveOrUpdate(booking);
 
             session.getTransaction().commit();
+
+            log.info("Бронирование сохранено");
 
         }
 
@@ -72,10 +85,14 @@ public class BookingDAO {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
 
+            log.info("Бронирование получено");
             return session.get(Booking.class, bookingId);
 
+
+
         }catch (Exception e){
-            throw new RuntimeException("Failed to get booking by id", e);
+            log.error("Ошибка при получении бронирования ",e);
+            throw new RuntimeException("Ошибка при получении бронирования", e);
         }
     }
 }
