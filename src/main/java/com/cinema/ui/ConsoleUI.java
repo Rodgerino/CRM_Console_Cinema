@@ -21,7 +21,6 @@ public class ConsoleUI {
     private final SessionDAO sessionDAO;
     private final BookingDAO bookingDAO;
     private final Scanner sc;
-    private Object LocalDateTime;
 
     public ConsoleUI(SeatDAO seatDAO, SessionDAO sessionDAO, BookingDAO bookingDAO) {
         this.seatDAO = seatDAO;

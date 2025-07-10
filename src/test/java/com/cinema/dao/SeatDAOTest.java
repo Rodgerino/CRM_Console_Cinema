@@ -31,7 +31,7 @@ public class SeatDAOTest {
     }
 
     @Test
-    void isSeatBooked() throws SQLException {
+    void isSeatBooked() {
 
         try(SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
             Session session = sessionFactory.openSession()){
