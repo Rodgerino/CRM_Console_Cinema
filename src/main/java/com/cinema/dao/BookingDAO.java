@@ -3,20 +3,16 @@ package com.cinema.dao;
 import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
 import com.cinema.util.HibernateUtil;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
-import java.sql.*;
+
+import java.sql.SQLException;
 import java.util.List;
 
-
+@Slf4j
 public class BookingDAO {
-
-
-    private static final Logger log = Logger.getLogger(BookingDAO.class);
 
     public List<Booking> getAllBookings() {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();

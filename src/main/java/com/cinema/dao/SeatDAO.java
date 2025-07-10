@@ -1,16 +1,13 @@
 package com.cinema.dao;
 
-import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
-import com.cinema.util.ConnectionManager;
 import com.cinema.util.HibernateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
-import java.sql.*;
-import java.util.ArrayList;
+
+import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j

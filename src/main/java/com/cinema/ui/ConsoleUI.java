@@ -6,19 +6,17 @@ import com.cinema.dao.SessionDAO;
 import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
 import com.cinema.entity.Session;
-import com.cinema.util.HibernateUtil;
 import com.cinema.util.InputValidator;
-import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
-import org.hibernate.SessionFactory;
+import lombok.extern.slf4j.Slf4j;
+
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+@Slf4j
 public class ConsoleUI {
 
-    private static final Logger log = Logger.getLogger(ConsoleUI.class);
     private final SeatDAO seatDAO;
     private final SessionDAO sessionDAO;
     private final BookingDAO bookingDAO;

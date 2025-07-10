@@ -1,15 +1,11 @@
 package com.cinema.dao;
 
-import com.cinema.entity.Booking;
 import com.cinema.entity.Session;
-import com.cinema.util.ConnectionManager;
 import com.cinema.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 public class SessionDAO {
