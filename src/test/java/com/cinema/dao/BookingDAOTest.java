@@ -3,16 +3,11 @@ package com.cinema.dao;
 
 import com.cinema.entity.Booking;
 import com.cinema.entity.Seat;
-import com.cinema.util.ConnectionManager;
 import com.cinema.util.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 
 public class BookingDAOTest {
